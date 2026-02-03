@@ -1,38 +1,26 @@
 [
   {
-    "id": 1,
-    "title": "The Great Gatsby",
-    "author": "F. Scott Fitzgerald",
-    "year": 1925
+    "id": 1704153600000,
+    "name": "Project Plan",
+    "icon": "📊",
+    "description": "Template for planning and tracking project milestones",
+    "color": "#D5E8FF",
+    "createdAt": "Jan 01"
   },
   {
-    "id": 2,
-    "title": "To Kill a Mockingbird",
-    "author": "Harper Lee",
-    "year": 1960
+    "id": 1704326400000,
+    "name": "Meeting Notes",
+    "icon": "📝",
+    "description": "Template for documenting meeting discussions and action items",
+    "color": "#FFE8D5",
+    "createdAt": "Jan 02"
   },
   {
-    "id": 3,
-    "title": "1984",
-    "author": "George Orwell",
-    "year": 1949
-  },
-  {
-    "id": 4,
-    "title": "Pride and Prejudice",
-    "author": "Jane Austen",
-    "year": 1813
-  },
-  {
-    "id": 5,
-    "title": "The Catcher in the Rye",
-    "author": "J.D. Salinger",
-    "year": 1951
-  },
-  {
-    "id": 6,
-    "title": "Wuthering Heights",
-    "author": "Emily Brontë",
-    "year": 1847
+    "id": 1704412800000,
+    "name": "Bug Report",
+    "icon": "🐛",
+    "description": "Template for reporting and tracking software bugs",
+    "color": "#FFD5D5",
+    "createdAt": "Jan 03"
   }
 ]
