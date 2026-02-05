@@ -1,5 +1,44 @@
 let templates = [];
 
+const templateCatalog = [
+  {
+    name: "Project Plan",
+    icon: "📊",
+    description: "Template for planning and tracking project milestones",
+    color: "#D5E8FF",
+    createdAt: "Jan 01"
+  },
+  {
+    name: "Meeting Notes",
+    icon: "📝",
+    description: "Template for documenting meeting discussions and action items",
+    color: "#FFE8D5",
+    createdAt: "Jan 02"
+  },
+  {
+    name: "Bug Report",
+    icon: "🐛",
+    description: "Template for reporting and tracking software bugs",
+    color: "#FFD5D5",
+    createdAt: "Jan 03"
+  },
+  {
+    name: "Default Lined Sheet",
+    icon: "📄",
+    description: "Default lined sheet template for writing notes",
+    color: "#E8F5E9",
+    createdAt: "Jan 04"
+  },
+  {
+    name: "Default Grid Sheet",
+    icon: "🧩",
+    description: "Default grid sheet template for structured layouts",
+    color: "#E3F2FD",
+    createdAt: "Jan 05"
+  }
+];
+
+
 const templatesContainer = document.getElementById('templates-container');
 const templateModal = document.getElementById('template-modal');
 const templateForm = document.getElementById('template-form');
@@ -108,6 +147,21 @@ async function deleteTemplate(id) {
     if (!confirm('Are you sure you want to delete this template?')) {
         return;
     }
+
+    try {
+        const response = await fetch (`/api/templates/${id}`, { method: 'DELETE' });
+
+        if (!response.ok) {
+            alert('Delete failed.');
+            return;
+        }
+
+        await loadTemplates();
+    } catch (err) {
+        console.error('Error deleting template:', err);
+        alert('Could not connect to server.');
+    }
+    
 }
 
 /* modal functions */
@@ -119,7 +173,7 @@ async function openModal() {
 
         form.innerHTML = `
             <div class="items-list">
-                ${templates.map(renderModalItem).join('')}
+                ${templateCatalog.map(renderModalItem).join('')}
             </div>
         `;
 

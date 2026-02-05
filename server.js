@@ -18,6 +18,11 @@ const readTemplates = () => {
     }
 };
 
+//helper to write templates
+const writeTemplates = (templates) => {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(templates, null, 2), 'utf8');
+};
+
 
 // main page
 app.get('/', (req, res) => {
@@ -36,6 +41,15 @@ app.get('/bug-report', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/bug-report.html'));
 });
 
+app.get('/default-lined-sheet', (req, res) => {
+    res.sendFile(path.join(__dirname, '/views/default-lined-sheet.html'));
+});
+
+app.get('/default-grid-sheet', (req, res) => {
+    res.sendFile(path.join(__dirname, '/views/default-grid-sheet.html'));
+});
+
+
 // API: get all templates
 app.get('/api/templates', (req, res) => {
     const templates = readTemplates();
@@ -44,10 +58,43 @@ app.get('/api/templates', (req, res) => {
 
 // API: add template
 app.post('/api/templates', (req, res) => {
+    const templates = readTemplates();
+    const { name, icon, description, color, createdAt } = req.body;
+
+    if (!name || !description) {
+        return res.status(400).json({ error: "Missing required fields: name, description" });
+    }
+
+    const newTemplate = {
+        id: Date.now(),
+        name: String(name),
+        icon: String(icon || "📄"),
+        description: String(description),
+        color: String(color || "#D5E8FF"),
+        createdAt: String(createdAt || new Date().toDateString().slice(4,10))
+    };
+
+    templates.push(newTemplate);
+    writeTemplates(templates);
+
+    return res.status(201).json(newTemplate);
 });
 
 // API: delete template
 app.delete('/api/templates/:id', (req, res) => {
+    const templates = readTemplates();
+    const id = req.params.id;
+
+    const index = templates.findIndex(t => String(t.id) === String(id));
+
+    if (index === -1) {
+        return res.status(404).json({ error: "Template not found" });
+    }
+
+    const deleted = templates.splice(index, 1)[0];
+    writeTemplates(templates);
+
+    return res.status(200).json({ message: "Deleted", deleted });
 });
 
 // invalid routes
