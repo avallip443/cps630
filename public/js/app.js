@@ -1,43 +1,5 @@
 let templates = [];
 
-const templateCatalog = [
-  {
-    name: "Project Plan",
-    icon: "📊",
-    description: "Template for planning and tracking project milestones",
-    color: "#D5E8FF",
-    createdAt: "Jan 01"
-  },
-  {
-    name: "Meeting Notes",
-    icon: "📝",
-    description: "Template for documenting meeting discussions and action items",
-    color: "#FFE8D5",
-    createdAt: "Jan 02"
-  },
-  {
-    name: "Bug Report",
-    icon: "🐛",
-    description: "Template for reporting and tracking software bugs",
-    color: "#FFD5D5",
-    createdAt: "Jan 03"
-  },
-  {
-    name: "Default Lined Sheet",
-    icon: "📄",
-    description: "Default lined sheet template for writing notes",
-    color: "#E8F5E9",
-    createdAt: "Jan 04"
-  },
-  {
-    name: "Default Grid Sheet",
-    icon: "🧩",
-    description: "Default grid sheet template for structured layouts",
-    color: "#E3F2FD",
-    createdAt: "Jan 05"
-  }
-];
-
 
 const templatesContainer = document.getElementById('templates-container');
 const templateModal = document.getElementById('template-modal');
@@ -58,6 +20,15 @@ function setupEventListeners() {
 }
 
 function handleTemplateClick(e) {
+    const deleteBtn = e.target.closest('.btn-delete');
+    if (deleteBtn) {
+        e.stopPropagation();
+
+        const id = deleteBtn.dataset.id;
+        deleteTemplate(id);
+        return;
+    }
+
     const card = e.target.closest('.template-card');
     if (!card) return;
 
@@ -118,7 +89,7 @@ function createTemplateCard(template) {
         <div class="template-info">
             <span>Created ${template.createdAt}</span>
             <div class="template-actions">
-                <button class="btn btn-delete" onclick="deleteTemplate(${template.id}); event.stopPropagation();">
+                <button class="btn btn-delete" data-id="${template.id}">
                     Delete
                 </button>
             </div>
@@ -169,19 +140,30 @@ async function deleteTemplate(id) {
 // open modal
 async function openModal() {
     try {
-        const form = templateModal.querySelector('.modal-body');
+        await loadTemplates();
 
-        form.innerHTML = `
+        const body = templateModal.querySelector('.modal-body');
+
+        body.innerHTML = `
             <div class="items-list">
-                ${templateCatalog.map(renderModalItem).join('')}
+                ${templates.map(renderModalItem).join('')}
             </div>
         `;
 
+        body.onclick = (e) => {
+            const option = e.target.closest('.item-option');
+                if (!option) return;
+
+            const url = option.dataset.url;
+                if (url) window.location.href = url;
+            };
+
         templateModal.classList.remove('hidden');
     } catch (err) {
-        console.error('Error opening modal:', err);
+    console.error('Error opening modal:', err);
     }
 }
+
 
 function renderModalItem(item) {
     return `

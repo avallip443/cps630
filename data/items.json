@@ -22,21 +22,5 @@
     "description": "Template for reporting and tracking software bugs",
     "color": "#FFD5D5",
     "createdAt": "Jan 03"
-  },
-    {
-    "id": 1704499200000,
-    "name": "Default Lined Sheet",
-    "icon": "📄",
-    "description": "Default lined sheet template for writing notes",
-    "color": "#E8F5E9",
-    "createdAt": "Jan 04"
-  },
-  {
-    "id": 1704585600000,
-    "name": "Default Grid Sheet",
-    "icon": "🧩",
-    "description": "Default grid sheet template for structured layouts",
-    "color": "#E3F2FD",
-    "createdAt": "Jan 05"
   }
 ]

@@ -41,14 +41,6 @@ app.get('/bug-report', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/bug-report.html'));
 });
 
-app.get('/default-lined-sheet', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/default-lined-sheet.html'));
-});
-
-app.get('/default-grid-sheet', (req, res) => {
-    res.sendFile(path.join(__dirname, '/views/default-grid-sheet.html'));
-});
-
 
 // API: get all templates
 app.get('/api/templates', (req, res) => {
