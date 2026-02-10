@@ -48,12 +48,14 @@ function navigateToTemplate(url) {
 function renderTemplates() {
     templatesContainer.innerHTML = '';
 
-    if (templates.length === 0) {
+    const visibleTemplates = templates.filter(t => !t.deleted);
+
+    if (visibleTemplates.length === 0) {
         templatesContainer.innerHTML = emptyStateTemplate();
         return;
     }
 
-    templates.forEach(template => {
+    visibleTemplates.forEach(template => {
         templatesContainer.appendChild(createTemplateCard(template));
     });
 }
@@ -118,21 +120,22 @@ async function deleteTemplate(id) {
     if (!confirm('Are you sure you want to delete this template?')) {
         return;
     }
-
+    
     try {
-        const response = await fetch (`/api/templates/${id}`, { method: 'DELETE' });
+        const response = await fetch(`/api/templates/${encodeURIComponent(id)}`, {
+            method: 'DELETE'
+        });
 
         if (!response.ok) {
             alert('Delete failed.');
             return;
         }
 
-        await loadTemplates();
+        await loadTemplates()
     } catch (err) {
         console.error('Error deleting template:', err);
-        alert('Could not connect to server.');
+        alert('Could not connect to server.')
     }
-    
 }
 
 /* modal functions */
@@ -147,6 +150,8 @@ async function openModal() {
         body.innerHTML = `
             <div class="items-list">
                 ${templates.map(renderModalItem).join('')}
+
+
             </div>
         `;
 

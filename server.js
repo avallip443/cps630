@@ -78,15 +78,15 @@ app.delete('/api/templates/:id', (req, res) => {
     const id = req.params.id;
 
     const index = templates.findIndex(t => String(t.id) === String(id));
-
     if (index === -1) {
         return res.status(404).json({ error: "Template not found" });
     }
 
-    const deleted = templates.splice(index, 1)[0];
+    templates[index].deleted = true;
     writeTemplates(templates);
 
-    return res.status(200).json({ message: "Deleted", deleted });
+    return res.status(200).json({ message: "Deleted", id });
+
 });
 
 // invalid routes

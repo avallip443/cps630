@@ -5,7 +5,8 @@
     "icon": "📊",
     "description": "Template for planning and tracking project milestones",
     "color": "#D5E8FF",
-    "createdAt": "Jan 01"
+    "createdAt": "Jan 01",
+    "deleted": true
   },
   {
     "id": 1704326400000,
