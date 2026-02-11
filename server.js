@@ -6,6 +6,19 @@ const app = express();
 const PORT = 1234;
 const DATA_FILE = path.join(__dirname, '/data/items.json');
 
+//default pages -- not the user created ones
+const DEFAULT_FILE = path.join(__dirname, '/data/default-templates.json');
+
+
+// helper to read JSON safely
+const readJSON = (filePath) => {
+    try {
+        return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    } catch (err) {
+        return [];
+    }
+};
+
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '/public')));
 
@@ -36,10 +49,18 @@ app.get('/bug-report', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/bug-report.html'));
 });
 
+app.get('/blank-template', (req, res) => {
+    res.sendFile(path.join(__dirname, '/views/blank-template.html'));
+});
+
 // API: get all templates
 app.get('/api/templates', (req, res) => {
-    const templates = readTemplates();
-    res.json(templates);
+    const defaultTemplates = readJSON(DEFAULT_FILE);
+    const userTemplates = readJSON(DATA_FILE);
+
+    // merge arrays
+    const allTemplates = [...defaultTemplates, ...userTemplates];
+    res.json(allTemplates);
 });
 
 // API: add template

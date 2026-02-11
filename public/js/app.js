@@ -6,6 +6,14 @@ const templateForm = document.getElementById('template-form');
 const newTemplateBtn = document.getElementById('open-modal');
 const closeModal = document.getElementById('close-modal');
 
+const templatesBtn = document.getElementById('templatesBtn');
+const templatesDropdown = document.getElementById('templatesDropdown');
+
+templatesBtn.addEventListener('click', () => {
+    templatesDropdown.classList.toggle('show');
+});
+
+
 window.addEventListener('DOMContentLoaded', () => {
     loadTemplates();
     setupEventListeners();
@@ -91,6 +99,7 @@ function createTemplateCard(template) {
 
 
 /* api functions */
+
 
 // load all available templates
 async function loadTemplates() {

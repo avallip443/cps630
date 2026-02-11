@@ -1,34 +1,34 @@
 [
-  {
-    "id": 1704153600000,
+    {
+    "id": 1,
     "name": "Project Plan",
     "icon": "📊",
     "description": "Template for planning and tracking project milestones",
-    "color": "#D5E8FF",
-    "createdAt": "Jan 01"
+    "isDefault": true,
+    "route": "/project-plan"
   },
   {
-    "id": 1704326400000,
+    "id": 2,
     "name": "Meeting Notes",
     "icon": "📝",
     "description": "Template for documenting meeting discussions and action items",
-    "color": "#FFE8D5",
-    "createdAt": "Jan 02"
+    "isDefault": true,
+    "route": "/meeting-notes"
   },
   {
-    "id": 1704412800000,
+    "id": 3,
     "name": "Bug Report",
     "icon": "🐛",
     "description": "Template for reporting and tracking software bugs",
-    "color": "#FFD5D5",
-    "createdAt": "Jan 03"
-  },
+    "isDefault": true,
+    "route": "/bug-report"
+  }, 
   {
-    "id": 1704499200000,
+    "id": 4,
     "name": "Blank Template",
     "icon": "",
     "description": "A blank template for custom use",
-    "color": "#E8D5FF",
-    "createdAt": "Jan 04"
+    "isDefault": true,
+    "route": "/blank-template"
   }
 ]
