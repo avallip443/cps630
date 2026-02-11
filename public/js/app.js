@@ -131,23 +131,11 @@ async function openModal() {
 
 function renderModalItem(item) {
     return `
-        <div class="item-option"
-            style="
-                border-left: 4px solid ${item.color};
-                padding: 15px;
-                margin-bottom: 10px;
-                background: #f9f9f9;
-                border-radius: 4px;
-                cursor: pointer;
-            ">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 24px;">${item.icon}</span>
-                <div>
-                    <div style="font-weight: bold;">${item.name}</div>
-                    <div style="font-size: 12px; color: #666;">
-                        ${item.description}
-                    </div>
-                </div>
+        <div class="item-option">
+            <div class="item-option-icon">${item.icon}</div>
+            <div class="item-option-content">
+                <div class="item-option-title">${item.name}</div>
+                <div class="item-option-desc">${item.description}</div>
             </div>
         </div>
     `;
