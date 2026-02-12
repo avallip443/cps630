@@ -2,8 +2,8 @@
   {
     "id": 1704153600000,
     "name": "Project Plan",
-    "icon": "📊",
-    "description": "Template for planning and tracking project milestones",
+    "icon": "🗂️",
+    "description": "Template for tracking projects",
     "color": "#D5E8FF",
     "createdAt": "Jan 01"
   },
@@ -11,7 +11,7 @@
     "id": 1704326400000,
     "name": "Meeting Notes",
     "icon": "📝",
-    "description": "Template for documenting meeting discussions and action items",
+    "description": "Template for documenting meetings",
     "color": "#FFE8D5",
     "createdAt": "Jan 02"
   },
@@ -19,7 +19,7 @@
     "id": 1704412800000,
     "name": "Bug Report",
     "icon": "🐛",
-    "description": "Template for reporting and tracking software bugs",
+    "description": "Template for tracking bugs",
     "color": "#FFD5D5",
     "createdAt": "Jan 03"
   }

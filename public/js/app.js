@@ -52,9 +52,8 @@ function renderTemplates() {
 function emptyStateTemplate() {
     return `
         <div class="empty-state">
-            <div class="empty-state-icon">📋</div>
-            <h3>No templates yet</h3>
-            <p>Create your first template using the + New Template button</p>
+            <h1>No templates yet</h1>
+            <p>Add your first template using the + New Template button</p>
             <button class="btn btn-primary" id="empty-new-template">
                 + New Template
             </button>
@@ -71,14 +70,14 @@ function createTemplateCard(template) {
     card.dataset.url = url;
 
     card.innerHTML = `
-        <div class="template-icon" style="background-color: ${template.color}">
+        <div class="icon" style="background-color: ${template.color}">
             ${template.icon}
         </div>
-        <div class="template-name">${template.name}</div>
+        <h2>${template.name}</h2>
         <div class="template-description">${template.description}</div>
         <div class="template-info">
             <span>Created ${template.createdAt}</span>
-            <div class="template-actions">
+            <div>
                 <button class="btn btn-delete" onclick="deleteTemplate(${template.id}); event.stopPropagation();">
                     Delete
                 </button>
@@ -132,7 +131,7 @@ async function openModal() {
 function renderModalItem(item) {
     return `
         <div class="item-option">
-            <div class="item-option-icon">${item.icon}</div>
+            <div class="icon">${item.icon}</div>
             <div class="item-option-content">
                 <div class="item-option-title">${item.name}</div>
                 <div class="item-option-desc">${item.description}</div>
