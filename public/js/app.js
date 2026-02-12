@@ -142,7 +142,7 @@ async function deleteTemplate(id) {
             return;
         }
 
-        await loadTemplates()
+        await loadCreatedTemplates()
     } catch (err) {
         console.error('Error deleting template:', err);
         alert('Could not connect to server.')
