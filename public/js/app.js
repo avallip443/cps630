@@ -17,19 +17,28 @@ window.addEventListener('DOMContentLoaded', () => {
 
     recentBtn.addEventListener('click', () => {
     recentDropdown.classList.toggle('show');
-
+    });
+    
     setupEventListeners();
     loadCreatedTemplates();
-    });
 });
 
 
 // event listeners
 function setupEventListeners() {
-    newTemplateBtn.addEventListener('click', openModal);
-    closeModal.addEventListener('click', closeTemplateModal);
-    templatesContainer.addEventListener('click', handleTemplateClick);
+    if (newTemplateBtn) {
+        newTemplateBtn.addEventListener('click', openModal);
+    }
+
+    if (closeModal) {
+        closeModal.addEventListener('click', closeTemplateModal);
+    }
+
+    if (templatesContainer) {
+        templatesContainer.addEventListener('click', handleTemplateClick);
+    }
 }
+
 
 // handle click on template card to navigate to template page
 function handleTemplateClick(e) {
@@ -147,8 +156,8 @@ async function loadCreatedTemplates() {
     try {
         const response = await fetch('/api/created-templates');
         createdTemplates = await response.json();
-        renderTemplates();
         renderSidebar();
+        renderTemplates();
     } catch (err) {
         console.error('Error loading templates:', err);
     }

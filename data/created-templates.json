@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "id": 1770938963730,
+    "name": "Project Plan",
+    "icon": "🗂️",
+    "description": "Template for tracking projects",
+    "color": "#D5E8FF",
+    "createdAt": "Feb 12"
+  },
+  {
+    "id": 1770939035954,
+    "name": "Meeting Notes",
+    "icon": "📝",
+    "description": "Template for documenting meetings",
+    "color": "#FFE8D5",
+    "createdAt": "Feb 12"
+  },
+  {
+    "id": 1770939964498,
+    "name": "Bug Report",
+    "icon": "🐛",
+    "description": "Template for tracking bugs",
+    "color": "#FFD5D5",
+    "createdAt": "Feb 12"
+  },
+  {
+    "id": 1770939970680,
+    "name": "Project Plan",
+    "icon": "🗂️",
+    "description": "Template for tracking projects",
+    "color": "#D5E8FF",
+    "createdAt": "Feb 12"
+  }
+]
