@@ -105,6 +105,22 @@ app.post('/api/create-template', (req, res) => {
 
 // API: delete template
 app.delete('/api/templates/:id', (req, res) => {
+    const id = req.params.id;
+
+    const createdTemplates = readCreatedTemplates();
+    const index = createdTemplates.findIndex(t => String(t.id) === String(id));
+
+    if (index === -1) {
+        return res.status(404).json({ error: "Template not found" });
+    }
+
+    createdTemplates.splice(index, 1);
+
+    if (!writeCreatedTemplates(createdTemplates)) {
+        return res.status(500).json({ error: "Failed to save templates" });
+    }
+
+    return res.status(200).json({ message: "Deleted", id });
 });
 
 // invalid routes

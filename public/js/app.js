@@ -3,6 +3,7 @@ let defaultTemplates = [];
 // templates created by the user
 let createdTemplates = [];
 
+
 const templatesContainer = document.getElementById('templates-container');
 const templateModal = document.getElementById('template-modal');
 const templateForm = document.getElementById('template-form');
@@ -32,6 +33,15 @@ function setupEventListeners() {
 
 // handle click on template card to navigate to template page
 function handleTemplateClick(e) {
+    const deleteBtn = e.target.closest('.btn-delete');
+    if (deleteBtn) {
+        e.stopPropagation();
+
+        const id = deleteBtn.dataset.id;
+        deleteTemplate(id);
+        return;
+    }
+
     const card = e.target.closest('.template-card');
     if (!card) return;
 
@@ -148,6 +158,22 @@ async function deleteTemplate(id) {
     if (!confirm('Are you sure you want to delete this template?')) {
         return;
     }
+    
+    try {
+        const response = await fetch(`/api/templates/${encodeURIComponent(id)}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            alert('Delete failed.');
+            return;
+        }
+
+        await loadCreatedTemplates()
+    } catch (err) {
+        console.error('Error deleting template:', err);
+        alert('Could not connect to server.')
+    }
 }
 
 // create new template from modal selection
@@ -203,9 +229,10 @@ async function openModal() {
 
         templateModal.classList.remove('hidden');
     } catch (err) {
-        console.error('Error opening modal:', err);
+    console.error('Error opening modal:', err);
     }
 }
+
 
 function renderModalItem(item) {
     return `
