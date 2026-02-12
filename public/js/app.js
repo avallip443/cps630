@@ -11,9 +11,18 @@ const newTemplateBtn = document.getElementById('open-modal');
 const closeModal = document.getElementById('close-modal');
 
 window.addEventListener('DOMContentLoaded', () => {
+setupEventListeners();
     loadCreatedTemplates();
-    setupEventListeners();
+
+    const recentBtn = document.getElementById('recentBtn');
+    const recentDropdown = document.getElementById('recentDropdown');
+
+    recentBtn.addEventListener('click', () => {
+        recentDropdown.classList.toggle('show');
+
+    });
 });
+
 
 // event listeners
 function setupEventListeners() {
@@ -103,6 +112,23 @@ function templateCardHTML(template) {
 }
 
 
+function renderSidebar() {
+    const sidebar = document.getElementById('recentDropdown');
+    sidebar.innerHTML = '';
+
+    createdTemplates.forEach(template => {
+        const link = document.createElement('a');
+
+        const url = '/' + template.name.toLowerCase().replace(/\s+/g, '-');
+
+        link.href = url;
+        link.textContent = template.name;
+
+        sidebar.appendChild(link);
+    });
+}
+
+
 /* api functions */
 
 // load default templates
@@ -121,6 +147,7 @@ async function loadCreatedTemplates() {
         const response = await fetch('/api/created-templates');
         createdTemplates = await response.json();
         renderTemplates();
+        renderSidebar();
     } catch (err) {
         console.error('Error loading templates:', err);
     }
