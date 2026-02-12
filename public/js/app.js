@@ -10,7 +10,7 @@ const newTemplateBtn = document.getElementById('open-modal');
 const closeModal = document.getElementById('close-modal');
 
 window.addEventListener('DOMContentLoaded', () => {
-    loadTemplates();
+    loadCreatedTemplates();
     setupEventListeners();
 });
 
@@ -95,21 +95,20 @@ function templateCardHTML(template) {
 
 /* api functions */
 
-// load all default templates
+// load default templates
 async function loadDefaultTemplates() {
     try {
-        const response = await fetch('/api/default-templates');
+        const response = await fetch('/data/items.json');
         defaultTemplates = await response.json();
-    }
-    catch (err) {
-        console.error('Error loading templates:', err);
+    } catch (err) {
+        console.error('Error loading default templates:', err);
     }
 }
 
 // load all user-created templates
-async function loadTemplates() {
+async function loadCreatedTemplates() {
     try {
-        const response = await fetch('/api/templates');
+        const response = await fetch('/api/created-templates');
         createdTemplates = await response.json();
         renderTemplates();
     } catch (err) {

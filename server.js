@@ -9,9 +9,10 @@ const CREATED_FILE = path.join(__dirname, '/data/created-templates.json');
 
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '/public')));
+app.use('/data', express.static(path.join(__dirname, '/data')));
 
-// helper to read templates
-const readTemplates = () => {
+// helper to read default templates
+const readDefaultTemplates = () => {
     try {
         return JSON.parse(fs.readFileSync(TEMPLATES_FILE, 'utf8'));
     } catch (err) {
@@ -61,14 +62,8 @@ app.get('/bug-report', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/bug-report.html'));
 });
 
-// API: get all default templates
-app.get('/api/default-templates', (req, res) => {
-    const templates = readTemplates();
-    res.json(templates);
-});
-
 // API: get all user-created templates
-app.get('/api/templates', (req, res) => {
+app.get('/api/created-templates', (req, res) => {
     const templates = readCreatedTemplates();
     res.json(templates);
 });
@@ -82,8 +77,8 @@ app.post('/api/create-template', (req, res) => {
         return res.status(400).json({ error: 'Missing templateName' });
     }
     
-    const templates = readTemplates();
-    const sourceTemplate = templates.find(t => t.name === templateName);
+    const defaultTemplates = readDefaultTemplates();
+    const sourceTemplate = defaultTemplates.find(t => t.name === templateName);
     
     if (!sourceTemplate) {
         return res.status(404).json({ error: 'Template not found' });
