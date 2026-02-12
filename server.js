@@ -6,7 +6,7 @@ const app = express();
 const PORT = 1234;
 const DATA_FILE = path.join(__dirname, '/data/items.json');
 
-//default pages -- not the user created ones
+//default pages 
 const DEFAULT_FILE = path.join(__dirname, '/data/default.json');
 
 
@@ -58,7 +58,6 @@ app.get('/api/templates', (req, res) => {
     const defaultTemplates = readJSON(DEFAULT_FILE);
     const userTemplates = readJSON(DATA_FILE);
 
-    // Send an object with two distinct lists
     res.json({
         defaults: defaultTemplates,
         userSaved: userTemplates

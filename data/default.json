@@ -26,5 +26,12 @@
     "description": "A blank template for custom use",
     "isDefault": true,
     "route": "/blank-template"
+  },
+  {
+    "id": 5,
+    "name": "Weekly Planner",
+    "description": "A template for planning weekly tasks and goals",
+    "isDefault": true,
+    "route": "/weekly-planner"
   }
 ]

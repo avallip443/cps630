@@ -1,6 +1,5 @@
-let defaultTemplates = [];
 let templates = [];
-
+let defaultTemplates = [];
 const templatesContainer = document.getElementById('templates-container');
 const templateModal = document.getElementById('template-modal');
 const templateForm = document.getElementById('template-form');
@@ -13,7 +12,6 @@ const templatesDropdown = document.getElementById('templatesDropdown');
 templatesBtn.addEventListener('click', () => {
     templatesDropdown.classList.toggle('show');
 });
-
 
 window.addEventListener('DOMContentLoaded', () => {
     loadTemplates();
@@ -105,15 +103,13 @@ function renderDashboard() {
         templatesContainer.innerHTML = `<div class="empty-state">No saved templates yet!</div>`;
         return;
     }
-
     templates.forEach(item => {
-        // ... logic to create and append your card ...
         const card = createTemplateCard(item); 
         templatesContainer.appendChild(card);
     });
 }
 
-// Renders the Sidebar using ONLY items from default.json
+// Renders the Sidebar using only items from default.json
 function renderSidebar() {
     const dropdown = document.getElementById('templatesDropdown');
     dropdown.innerHTML = ''; 
