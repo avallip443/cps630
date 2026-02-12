@@ -64,9 +64,8 @@ function renderTemplates() {
 function emptyStateTemplate() {
     return `
         <div class="empty-state">
-            <div class="empty-state-icon">📋</div>
-            <h3>No templates yet</h3>
-            <p>Create your first template using the + New Template button</p>
+            <h1>No templates yet</h1>
+            <p>Add your first template using the + New Template button</p>
             <button class="btn btn-primary" id="empty-new-template">
                 + New Template
             </button>
@@ -83,15 +82,15 @@ function createTemplateCard(template) {
     card.dataset.url = url;
 
     card.innerHTML = `
-        <div class="template-icon" style="background-color: ${template.color}">
+        <div class="icon" style="background-color: ${template.color}">
             ${template.icon}
         </div>
-        <div class="template-name">${template.name}</div>
+        <h2>${template.name}</h2>
         <div class="template-description">${template.description}</div>
         <div class="template-info">
             <span>Created ${template.createdAt}</span>
-            <div class="template-actions">
-                <button class="btn btn-delete" data-id="${template.id}">
+            <div>
+                <button class="btn btn-delete" onclick="deleteTemplate(${template.id}); event.stopPropagation();">
                     Delete
                 </button>
             </div>
@@ -172,23 +171,11 @@ async function openModal() {
 
 function renderModalItem(item) {
     return `
-        <div class="item-option"
-            style="
-                border-left: 4px solid ${item.color};
-                padding: 15px;
-                margin-bottom: 10px;
-                background: #f9f9f9;
-                border-radius: 4px;
-                cursor: pointer;
-            ">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 24px;">${item.icon}</span>
-                <div>
-                    <div style="font-weight: bold;">${item.name}</div>
-                    <div style="font-size: 12px; color: #666;">
-                        ${item.description}
-                    </div>
-                </div>
+        <div class="item-option">
+            <div class="icon">${item.icon}</div>
+            <div class="item-option-content">
+                <div class="item-option-title">${item.name}</div>
+                <div class="item-option-desc">${item.description}</div>
             </div>
         </div>
     `;

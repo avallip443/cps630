@@ -1,44 +1,31 @@
-# Totoro's Shelf - CPS630 A1
+# Notion Clone - CPS630 A1
 
 ## Overview
 
-Totoro's Shelf is a web application for managing a personal book collection.
-
-## Key Features
-
-- Features
-
-## Future Extensions
+## Documentation
 
 ### Installation & Setup
 
-1. **Clone Repository**
-```bash
-git clone
-cd folder
+1. **Clone repository**
+```
+git clone https://github.com/avallip443/cps630.git
+```
+
+2. **Install dependencies**
+```
 npm install
 ```
 
-1. **Install Dependencies:**
-```bash
-npm install
+3. **Start the Server:**
 ```
-
-2. **Start the Server:**
-```bash
 node server.js
 ```
 
 The server will run on `http://localhost:1234`
 
+### Using The App
 
-### How to Use
 
-### REST API Endpoints
-
-#### GET /api/items
-
----
 
 ## Reflection
 
