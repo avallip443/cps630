@@ -11,15 +11,15 @@ const newTemplateBtn = document.getElementById('open-modal');
 const closeModal = document.getElementById('close-modal');
 
 window.addEventListener('DOMContentLoaded', () => {
-setupEventListeners();
-    loadCreatedTemplates();
 
     const recentBtn = document.getElementById('recentBtn');
     const recentDropdown = document.getElementById('recentDropdown');
 
     recentBtn.addEventListener('click', () => {
-        recentDropdown.classList.toggle('show');
+    recentDropdown.classList.toggle('show');
 
+    setupEventListeners();
+    loadCreatedTemplates();
     });
 });
 
@@ -116,17 +116,18 @@ function renderSidebar() {
     const sidebar = document.getElementById('recentDropdown');
     sidebar.innerHTML = '';
 
-    createdTemplates.forEach(template => {
+    // sort templates by newest first using id
+    const sortedTemplates = [...createdTemplates].sort((a, b) => b.id - a.id);
+
+    sortedTemplates.forEach(template => {
         const link = document.createElement('a');
-
         const url = '/' + template.name.toLowerCase().replace(/\s+/g, '-');
-
         link.href = url;
         link.textContent = template.name;
-
         sidebar.appendChild(link);
     });
 }
+
 
 
 /* api functions */
@@ -194,6 +195,7 @@ async function createNewTemplate(templateName) {
             createdTemplates.push(newTemplate);
             closeTemplateModal();
             renderTemplates();
+            renderSidebar();
         } else {
             console.error('Failed to create template');
         }
