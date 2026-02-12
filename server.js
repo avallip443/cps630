@@ -4,7 +4,8 @@ const path = require('path');
 const app = express();
 
 const PORT = 1234;
-const DATA_FILE = path.join(__dirname, '/data/items.json');
+const TEMPLATES_FILE = path.join(__dirname, '/data/items.json');
+const CREATED_FILE = path.join(__dirname, '/data/created-templates.json');
 
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '/public')));
@@ -12,12 +13,36 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 // helper to read templates
 const readTemplates = () => {
     try {
-        return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+        return JSON.parse(fs.readFileSync(TEMPLATES_FILE, 'utf8'));
     } catch (err) {
         return [];
     }
 };
 
+// helper to read created templates
+const readCreatedTemplates = () => {
+    try {
+        return JSON.parse(fs.readFileSync(CREATED_FILE, 'utf8'));
+    } catch (err) {
+        return [];
+    }
+};
+
+// helper to write created templates
+const writeCreatedTemplates = (templates) => {
+    try {
+        fs.writeFileSync(CREATED_FILE, JSON.stringify(templates, null, 2), 'utf8');
+        return true;
+    } catch (err) {
+        console.error('Error writing templates:', err);
+        return false;
+    }
+};
+
+// helper to format date
+const formatDate = (date) => {
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+};
 
 // main page
 app.get('/', (req, res) => {
@@ -36,14 +61,51 @@ app.get('/bug-report', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/bug-report.html'));
 });
 
-// API: get all templates
-app.get('/api/templates', (req, res) => {
+// API: get all default templates
+app.get('/api/default-templates', (req, res) => {
     const templates = readTemplates();
     res.json(templates);
 });
 
-// API: add template
-app.post('/api/templates', (req, res) => {
+// API: get all user-created templates
+app.get('/api/templates', (req, res) => {
+    const templates = readCreatedTemplates();
+    res.json(templates);
+});
+
+// API: create new template
+app.post('/api/create-template', (req, res) => {
+    const { templateName } = req.body;
+    
+    // validate fields
+    if (!templateName) {
+        return res.status(400).json({ error: 'Missing templateName' });
+    }
+    
+    const templates = readTemplates();
+    const sourceTemplate = templates.find(t => t.name === templateName);
+    
+    if (!sourceTemplate) {
+        return res.status(404).json({ error: 'Template not found' });
+    }
+    
+    const newTemplate = {
+        id: Date.now(),
+        name: sourceTemplate.name,
+        icon: sourceTemplate.icon,
+        description: sourceTemplate.description,
+        color: sourceTemplate.color,
+        createdAt: formatDate(new Date())
+    };
+    
+    const createdTemplates = readCreatedTemplates();
+    createdTemplates.push(newTemplate);
+    
+    if (!writeCreatedTemplates(createdTemplates)) {
+        return res.status(500).json({ error: 'Failed to save template' });
+    }
+    
+    res.json(newTemplate);
 });
 
 // API: delete template
