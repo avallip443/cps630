@@ -66,8 +66,7 @@ function createTemplateCard(template) {
     const card = document.createElement('div');
     card.className = 'template-card';
 
-    const url = '/' + template.name.toLowerCase().replace(/\s+/g, '-');
-    card.dataset.url = url;
+    card.dataset.url = '/' + template.slug;
 
     card.innerHTML = `
         <div class="icon" style="background-color: ${template.color}">
@@ -86,6 +85,29 @@ function createTemplateCard(template) {
     `;
 
     return card;
+}
+
+async function createNewTemplate(type) {
+    const name = prompt("Enter file name:");
+    if (!name) return;
+
+    try {
+        const response = await fetch('/api/templates', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, type })
+        });
+
+        const newTemplate = await response.json();
+
+        closeTemplateModal();
+        loadTemplates();
+
+        window.location.href = '/' + newTemplate.slug;
+
+    } catch (err) {
+        console.error("Error creating template:", err);
+    }
 }
 
 
@@ -114,23 +136,28 @@ async function deleteTemplate(id) {
 // open modal
 async function openModal() {
     try {
+        const response = await fetch('/api/default-templates');
+        const defaultTemplates = await response.json();
+
         const form = templateModal.querySelector('.modal-body');
 
         form.innerHTML = `
             <div class="items-list">
-                ${templates.map(renderModalItem).join('')}
+                ${defaultTemplates.map(renderModalItem).join('')}
             </div>
         `;
 
         templateModal.classList.remove('hidden');
+
     } catch (err) {
         console.error('Error opening modal:', err);
     }
 }
 
+
 function renderModalItem(item) {
     return `
-        <div class="item-option">
+        <div class="item-option" onclick="createNewTemplate('${item.type}')">
             <div class="icon">${item.icon}</div>
             <div class="item-option-content">
                 <div class="item-option-title">${item.name}</div>
@@ -139,6 +166,7 @@ function renderModalItem(item) {
         </div>
     `;
 }
+
 
 // close modal
 function closeTemplateModal() {
