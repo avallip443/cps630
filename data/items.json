@@ -22,13 +22,5 @@
     "description": "Template for reporting and tracking software bugs",
     "color": "#FFD5D5",
     "createdAt": "Jan 03"
-  },
-  {
-    "id": 1704499200000,
-    "name": "Blank Template",
-    "icon": "",
-    "description": "A blank template for custom use",
-    "color": "#E8D5FF",
-    "createdAt": "Jan 04"
   }
 ]
