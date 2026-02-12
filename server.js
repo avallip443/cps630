@@ -7,7 +7,7 @@ const PORT = 1234;
 const DATA_FILE = path.join(__dirname, '/data/items.json');
 
 //default pages -- not the user created ones
-const DEFAULT_FILE = path.join(__dirname, '/data/default-templates.json');
+const DEFAULT_FILE = path.join(__dirname, '/data/default.json');
 
 
 // helper to read JSON safely
@@ -58,9 +58,11 @@ app.get('/api/templates', (req, res) => {
     const defaultTemplates = readJSON(DEFAULT_FILE);
     const userTemplates = readJSON(DATA_FILE);
 
-    // merge arrays
-    const allTemplates = [...defaultTemplates, ...userTemplates];
-    res.json(allTemplates);
+    // Send an object with two distinct lists
+    res.json({
+        defaults: defaultTemplates,
+        userSaved: userTemplates
+    });
 });
 
 // API: add template

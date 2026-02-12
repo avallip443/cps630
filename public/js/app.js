@@ -1,3 +1,4 @@
+let defaultTemplates = [];
 let templates = [];
 
 const templatesContainer = document.getElementById('templates-container');
@@ -97,6 +98,34 @@ function createTemplateCard(template) {
     return card;
 }
 
+function renderDashboard() {
+    templatesContainer.innerHTML = '';
+    
+    if (templates.length === 0) {
+        templatesContainer.innerHTML = `<div class="empty-state">No saved templates yet!</div>`;
+        return;
+    }
+
+    templates.forEach(item => {
+        // ... logic to create and append your card ...
+        const card = createTemplateCard(item); 
+        templatesContainer.appendChild(card);
+    });
+}
+
+// Renders the Sidebar using ONLY items from default.json
+function renderSidebar() {
+    const dropdown = document.getElementById('templatesDropdown');
+    dropdown.innerHTML = ''; 
+
+    defaultTemplates.forEach(temp => {
+        const link = document.createElement('a');
+        link.href = temp.route;
+        link.textContent = temp.name;
+        dropdown.appendChild(link);
+    });
+}
+
 
 /* api functions */
 
@@ -105,8 +134,14 @@ function createTemplateCard(template) {
 async function loadTemplates() {
     try {
         const response = await fetch('/api/templates');
-        templates = await response.json();
-        renderTemplates();
+        const data = await response.json();
+        
+        // Store them separately
+        defaultTemplates = data.defaults;
+        templates = data.userSaved;
+        
+        renderDashboard(); // Show saved items in the grid
+        renderSidebar();   // Show default items in the sidebar
     } catch (err) {
         console.error('Error loading templates:', err);
     }
