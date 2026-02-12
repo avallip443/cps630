@@ -1,4 +1,7 @@
-let templates = [];
+// default templates the user can select from when creating a new template
+let defaultTemplates = [];
+// templates created by the user
+let createdTemplates = [];
 
 const templatesContainer = document.getElementById('templates-container');
 const templateModal = document.getElementById('template-modal');
@@ -7,7 +10,7 @@ const newTemplateBtn = document.getElementById('open-modal');
 const closeModal = document.getElementById('close-modal');
 
 window.addEventListener('DOMContentLoaded', () => {
-    loadTemplates();
+    loadCreatedTemplates();
     setupEventListeners();
 });
 
@@ -18,6 +21,7 @@ function setupEventListeners() {
     templatesContainer.addEventListener('click', handleTemplateClick);
 }
 
+// handle click on template card to navigate to template page
 function handleTemplateClick(e) {
     const card = e.target.closest('.template-card');
     if (!card) return;
@@ -26,50 +30,52 @@ function handleTemplateClick(e) {
     if (url) window.location.href = url;
 }
 
-// navigate to template
-function navigateToTemplate(url) {
-    window.location.href = url;
-}
-
 
 /* template container functions */
 
-// render templates to ui
+// render user-created templates to ui
 function renderTemplates() {
     templatesContainer.innerHTML = '';
-
-    if (templates.length === 0) {
-        templatesContainer.innerHTML = emptyStateTemplate();
+    
+    // shows empty state if no templates were created
+    if (createdTemplates.length === 0) {
+        templatesContainer.innerHTML = emptyTemplatesHTML();
         return;
     }
 
-    templates.forEach(template => {
+    // shows user-created templates
+    createdTemplates.forEach(template => {
         templatesContainer.appendChild(createTemplateCard(template));
     });
 }
 
-// create empty state template
-function emptyStateTemplate() {
+// returns empty state html
+function emptyTemplatesHTML() {
     return `
         <div class="empty-state">
             <h1>No templates yet</h1>
             <p>Add your first template using the + New Template button</p>
-            <button class="btn btn-primary" id="empty-new-template">
-                + New Template
-            </button>
         </div>
     `;
 }
 
-// create a template card element
+// creates a template card element
 function createTemplateCard(template) {
     const card = document.createElement('div');
     card.className = 'template-card';
+    card.dataset.id = template.id;
 
     const url = '/' + template.name.toLowerCase().replace(/\s+/g, '-');
     card.dataset.url = url;
 
-    card.innerHTML = `
+    card.innerHTML = templateCardHTML(template);
+
+    return card;
+}
+
+// return html for a template card
+function templateCardHTML(template) {
+    return `
         <div class="icon" style="background-color: ${template.color}">
             ${template.icon}
         </div>
@@ -84,18 +90,26 @@ function createTemplateCard(template) {
             </div>
         </div>
     `;
-
-    return card;
 }
 
 
 /* api functions */
 
-// load all available templates
-async function loadTemplates() {
+// load default templates
+async function loadDefaultTemplates() {
     try {
-        const response = await fetch('/api/templates');
-        templates = await response.json();
+        const response = await fetch('/data/items.json');
+        defaultTemplates = await response.json();
+    } catch (err) {
+        console.error('Error loading default templates:', err);
+    }
+}
+
+// load all user-created templates
+async function loadCreatedTemplates() {
+    try {
+        const response = await fetch('/api/created-templates');
+        createdTemplates = await response.json();
         renderTemplates();
     } catch (err) {
         console.error('Error loading templates:', err);
@@ -109,18 +123,56 @@ async function deleteTemplate(id) {
     }
 }
 
+// create new template from modal selection
+async function createNewTemplate(templateName) {
+    try {
+        // send post request to create a new template
+        // sends template name to verify which template to copy
+        const response = await fetch('/api/create-template', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ templateName })
+        });
+
+        if (response.ok) {
+            const newTemplate = await response.json();
+            createdTemplates.push(newTemplate);
+            closeTemplateModal();
+            renderTemplates();
+        } else {
+            console.error('Failed to create template');
+        }
+    } catch (err) {
+        console.error('Error creating template:', err);
+    }
+}
+
+
 /* modal functions */
 
 // open modal
 async function openModal() {
     try {
+        await loadDefaultTemplates();
+        
         const form = templateModal.querySelector('.modal-body');
 
+        // render deafult template options
         form.innerHTML = `
             <div class="items-list">
-                ${templates.map(renderModalItem).join('')}
+                ${defaultTemplates.map(renderModalItem).join('')}
             </div>
         `;
+
+        // add click listeners to items
+        form.querySelectorAll('.item-option').forEach(item => {
+            item.addEventListener('click', () => {
+                const templateName = item.dataset.templateName;
+                createNewTemplate(templateName);
+            });
+        });
 
         templateModal.classList.remove('hidden');
     } catch (err) {
@@ -130,7 +182,7 @@ async function openModal() {
 
 function renderModalItem(item) {
     return `
-        <div class="item-option">
+        <div class="item-option" data-template-name="${item.name}">
             <div class="icon">${item.icon}</div>
             <div class="item-option-content">
                 <div class="item-option-title">${item.name}</div>

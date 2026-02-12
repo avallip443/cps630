@@ -1,6 +1,5 @@
 [
   {
-    "id": 1704153600000,
     "name": "Project Plan",
     "icon": "🗂️",
     "description": "Template for tracking projects",
@@ -8,7 +7,6 @@
     "createdAt": "Jan 01"
   },
   {
-    "id": 1704326400000,
     "name": "Meeting Notes",
     "icon": "📝",
     "description": "Template for documenting meetings",
@@ -16,7 +14,6 @@
     "createdAt": "Jan 02"
   },
   {
-    "id": 1704412800000,
     "name": "Bug Report",
     "icon": "🐛",
     "description": "Template for tracking bugs",
