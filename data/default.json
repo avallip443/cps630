@@ -2,7 +2,6 @@
     {
     "id": 1,
     "name": "Project Plan",
-    "icon": "📊",
     "description": "Template for planning and tracking project milestones",
     "isDefault": true,
     "route": "/project-plan"
@@ -10,7 +9,6 @@
   {
     "id": 2,
     "name": "Meeting Notes",
-    "icon": "📝",
     "description": "Template for documenting meeting discussions and action items",
     "isDefault": true,
     "route": "/meeting-notes"
@@ -18,7 +16,6 @@
   {
     "id": 3,
     "name": "Bug Report",
-    "icon": "🐛",
     "description": "Template for reporting and tracking software bugs",
     "isDefault": true,
     "route": "/bug-report"
@@ -26,7 +23,6 @@
   {
     "id": 4,
     "name": "Blank Template",
-    "icon": "",
     "description": "A blank template for custom use",
     "isDefault": true,
     "route": "/blank-template"
