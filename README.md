@@ -1,9 +1,8 @@
 # ThinkR - CPS630 A1
 
 ## Overview
-This web application is a flexible workspace designed to help individuals organize files, notes, and tasks in a single platform. Users can create pages from default templates to manage projects and information efficiently. In the future, the app could be extended to allow fully customizable pages and advanced organizational features, giving users complete control over their workflow.
+This web application is a flexible workspace designed to help individuals organize files, notes, and tasks in a single platform. Users can create pages from default templates to manage projects and information efficiently. In the future, the app could be extended to allow fully customizable pages and advanced organizational features, giving users complete control over their workflow, as well allowing the users to save and edit their file inputs. 
 
-  
 Built using: Node.js, Express, HTML, CSS, JavaScript JSON, REST APIs <br>
 Inspired by: Notion 
 ## Documentation
@@ -35,8 +34,10 @@ The server will run on `http://localhost:1234`
 - / --> main page
 - /project-plan --> project plan template
 - /meeting-notes --> meeting notes template
-- bug-report --> bug report template
+- /bug-report --> bug report template
+- /error.html --> invalid routes
 #### API
+- POST /api/create-templates --> creates templates
 - GET /api/created-templates --> returns all files created by user
 - GET /api/default-templates --> returns all default templates
 - DELETE /api/templates/:id --> deletes user created file
