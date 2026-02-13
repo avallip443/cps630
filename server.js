@@ -62,9 +62,15 @@ app.get('/bug-report', (req, res) => {
     res.sendFile(path.join(__dirname, '/views/bug-report.html'));
 });
 
-// API: get all user-created templates
+// API: get all user-created files
 app.get('/api/created-templates', (req, res) => {
     const templates = readCreatedTemplates();
+    res.json(templates);
+});
+
+// API: get all default templates
+app.get('/api/default-templates', (req, res) => {
+    const templates = readDefaultTemplates();
     res.json(templates);
 });
 
